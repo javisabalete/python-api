@@ -9,7 +9,7 @@ def _redisConnect():
    return redis.StrictRedis(host='redis', port=6379, db=0);
 
 @app.route("/")
-def hello():
+def index():
    return "Hello World"
 
 @app.route("/visits")
@@ -18,6 +18,7 @@ def visits():
    if r.exists('visits') == False:
       r.set('visits',0)
    visits = int(r.get('visits'))+1
+   r.set('visits',visits)
    return "Total visits %d" % visits
 
 @app.route("/keys")
